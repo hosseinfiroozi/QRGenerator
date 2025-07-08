@@ -19,5 +19,5 @@ cd QRGeneratorApp
  dotnet run
 ```
 
-The program asks for `OperationCode`, `ProductionStationCode`, and `Count`, requests the barcodes, and saves an `output.png` containing the generated QR codes.
+The program asks for `OperationCode`, `ProductionStationCode`, `Count`, `LotNo`, and `PreLot`, requests the barcodes, and saves an `output.png` containing the generated QR codes with the `LotNo` and `PreLot` printed above them.
 

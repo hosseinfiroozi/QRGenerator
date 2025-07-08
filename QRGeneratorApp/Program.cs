@@ -16,6 +16,10 @@ class Program
         string? productionStationCode = Console.ReadLine()?.Trim();
         Console.Write("Count: ");
         string? countInput = Console.ReadLine()?.Trim();
+        Console.Write("LotNo: ");
+        string? lotNo = Console.ReadLine()?.Trim();
+        Console.Write("PreLot: ");
+        string? preLot = Console.ReadLine()?.Trim();
 
         if (!int.TryParse(countInput, out int count) || count <= 0)
         {
@@ -25,6 +29,11 @@ class Program
         if (string.IsNullOrWhiteSpace(operationCode) || string.IsNullOrWhiteSpace(productionStationCode))
         {
             Console.WriteLine("OperationCode and ProductionStationCode cannot be empty.");
+            return 1;
+        }
+        if (string.IsNullOrWhiteSpace(lotNo) || string.IsNullOrWhiteSpace(preLot))
+        {
+            Console.WriteLine("LotNo and PreLot cannot be empty.");
             return 1;
         }
 
@@ -64,15 +73,20 @@ class Program
             int rows = (int)Math.Ceiling(images.Count / (double)columns);
             int width = images[0].Width;
             int height = images[0].Height;
-            using var result = new Bitmap(columns * width, rows * height);
+            int headerHeight = 40;
+            using var result = new Bitmap(columns * width, rows * height + headerHeight);
             using (var g = Graphics.FromImage(result))
             {
                 g.Clear(Color.White);
+                using var font = new Font("Arial", 16);
+                string header = $"LotNo: {lotNo}, PreLot: {preLot}";
+                var textSize = g.MeasureString(header, font);
+                g.DrawString(header, font, Brushes.Black, (result.Width - textSize.Width) / 2, 5);
                 for (int i = 0; i < images.Count; i++)
                 {
                     int r = i / columns;
                     int c = i % columns;
-                    g.DrawImage(images[i], c * width, r * height);
+                    g.DrawImage(images[i], c * width, r * height + headerHeight);
                 }
             }
 
